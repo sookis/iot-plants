@@ -4,9 +4,8 @@ import SSD1306
 from SI7006A20 import SI7006A20
 from MPL3115A2 import MPL3115A2, ALTITUDE, PRESSURE
 import time
-from machine import Pin, I2C
+from machine import Pin, I2C, ADC
 from pycoproc_2 import Pycoproc
-from machine import ADC
 from dht import DHT  # https://github.com/JurassicPork/DHT_PyCom
 import pycom
 

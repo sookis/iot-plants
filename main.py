@@ -1,8 +1,6 @@
 from mqtt import MQTTClient
 from LTR329ALS01 import LTR329ALS01
 import SSD1306
-from SI7006A20 import SI7006A20
-from MPL3115A2 import MPL3115A2, ALTITUDE, PRESSURE
 import time
 from machine import Pin, I2C, ADC
 from pycoproc_2 import Pycoproc
@@ -43,10 +41,7 @@ if py.read_product_id() != Pycoproc.USB_PID_PYSENSE:
     raise Exception('Not a Pysense')
 
 # Pysense sensors
-si = SI7006A20(py)
 lt = LTR329ALS01(py)
-mpp = MPL3115A2(py, mode=PRESSURE)  # Returns pressure in Pa. Mode may also be set to ALTITUDE, returning a value in meters
-mp = MPL3115A2(py, mode=ALTITUDE)  # Returns height in meters. Mode may also be set to PRESSURE, returning a value in Pascals
 
 # OLED
 OLED_WIDTH = 128
@@ -205,16 +200,9 @@ while True:
     time.sleep(1800)  # Sleep for 30 minutes
 """
 Print to terminal for testing purposes
-    print("MPL3115A2 temperature: " + str(mp.temperature()))
-    print("Altitude: " + str(mp.altitude()))
-    print("Pressure: " + str(mpp.pressure()))
     print('Temperature:', result.temperature)
     print('Humidity:', result.humidity)
     print("Light (channel Blue, channel Red): " + str(lt.light())," Lux: ", str(lt.lux()), "lx")
     print("Jordfuktighet: " + str(moisture))
-    print("Temperature: " + str(si.temperature())+ " deg C and Relative Humidity: " + str(si.humidity()) + " %RH")
-    print("Dew point: "+ str(si.dew_point()) + " deg C")
-    t_ambient = 24.4
-    print("Humidity Ambient for " + str(t_ambient) + " deg C is " + str(si.humid_ambient(t_ambient)) + "%RH")
 """
 

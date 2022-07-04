@@ -163,7 +163,7 @@ Some of the code is from the course resources and examples and can be found [her
 
 #### Code for WiFi connectivity
 The code below is from the file <mark>boot.py</mark> wich is the first file that runs on boot up. It connects to the ssid of your choice and tells you both via the commandline (if you have it connected to your computer) and via the led  if you are connected or not (red light means not connected, and green light means connected).
-```
+```python
 import network
 import machine
 import time
@@ -202,7 +202,7 @@ These files will be put in the 'lib' directory and then imported inside <mark>ma
 Below are some key functions:
 
 Setting up all the pins:
-```
+```python
 #  Pin setup
 
 # initialize the moist control pin and make it an output
@@ -218,7 +218,7 @@ rotary_clk_pin = Pin(rotary_clk, mode=Pin.IN)
 th = DHT(Pin(dht_pin, mode=Pin.OPEN_DRAIN), 0)  # Type 0 = dht11, which is what we have
 ```
 Here we are making the P22 and P21 the I2C pins. This is the pins that's connected to the PySense's built in sensors and the OLED display.
-```
+```python
 # I2C
 i2c = I2C(0)
 i2c = I2C(0, I2C.MASTER)
@@ -228,7 +228,7 @@ i2c.init(I2C.MASTER, baudrate=40000)  # init as a master
 ```
 
 This is where we define the different plants and their values:
-```
+```python
 plant_dict = {"Tomat": {"max_moist": 65, "min_moist": 30},
               "Pelargon": {"max_moist": 75, "min_moist": 40},
               "Gurka": {"max_moist": 65, "min_moist": 30},
@@ -239,7 +239,7 @@ plant_dict = {"Tomat": {"max_moist": 65, "min_moist": 30},
 plants_list = list(plant_dict.keys())
 ```
 This is then used to give feedback to the user through the display and the led:
-```
+```python
 def plant_values(plant):
     global plant_dict, plant_list
     # Values
@@ -277,7 +277,7 @@ set of values that are repeated over and over.
 detail. Be aware that the values shown in the video probably wont be the same values you
 encounter when you turn the knob. Below is my code for the rotary encoder:
 
-```
+```python
 def rotary_change(pin):
     global last_status, counter, plants_list, moisture
     max_counter = len(plants_list) - 1  # Make sure the counter never exceeds the number of plants
@@ -301,7 +301,7 @@ def rotary_change(pin):
 
 Finally, we have the while loop that runs every 30 minutes that collects the data and sends it to our MQTT-broker:
 
-```
+```python
 while True:
     result = th.read()
     while not result.is_valid():
